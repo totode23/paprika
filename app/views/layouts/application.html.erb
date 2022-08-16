@@ -3,6 +3,7 @@
   <head>
     <title>PaprikaApp</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -11,6 +12,48 @@
   </head>
 
   <body>
+    <div class="header">
+      <div class="header-logo">
+       <%= link_to "paprika.", "/", class:"link" %>
+      </div>
+          <div class="header-list">
+          <% if session[:user_id]%>
+              <ul>
+                <li>
+                    <div class="header-logout">
+                    <%= button_to "ログアウト", {controller: "users", action: "logout"}, {method: :post, class: "button"} %>
+                    </div>
+                </li>
+          <% else %>
+                <li>
+                    <div class="heder-login">
+                    <%= button_to "ログイン", {controller: "users", action: "login"}, {method: :get, class: "button"} %>
+                    </div>
+                </li>
+                <li>
+                    <div class="heder-create_new">
+                      <%= button_to "新規登録", {controller: "users", action: "new"}, {method: :get, class: "button"} %>
+                    </div>
+                </li>
+              </ul>
+            
+          <% end %>
+          </div>
+    </div>
+
+    <% if flash[:notice] %>
+      <div class="flash">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
+    <div class=current_user>
+    <%= session[:name] %>
+    </div>
+    
+    
+    <div class="action-bar">
+    </div>
     <%= yield %>
   </body>
 </html>
